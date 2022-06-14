@@ -197,6 +197,16 @@ class VisualNLIDataset(Dataset):
             logger.info("Loading from %s" % cache_path)
             self.entries = cPickle.load(open(cache_path, "rb"))
 
+    def truncate_seq_pair(tokens_a, tokens_b, max_length):
+        while True:
+            total_length = len(tokens_a) + len(tokens_b)
+            if total_length <= max_length:
+                break
+            if len(tokens_a) > len(tokens_b):
+                tokens_a.pop()
+            else:
+                tokens_b.pop()
+
     def tokenize(self, max_length=16):
         """Tokenizes the questions.
 
@@ -217,15 +227,19 @@ class VisualNLIDataset(Dataset):
             # print(entry["hypothesis"])
 
             if(type(entry["hypothesis"]) != float):
-                tokens = self._tokenizer.encode(entry["hypothesis"])
-                tokens = tokens[: max_length - 2]
-                tokens = self._tokenizer.add_special_tokens_single_sentence(tokens)
+                tokens_1 = self._tokenizer.encode(entry["hypothesis"])
+                tokens_2 = self._tokenizer.encode(entry["premise"])
+                self.truncate_seq_pair(tokens_1, tokens_2, self.args.max_length - 3)
+                tokens = ["[CLS]"] + tokens_1 + ["[SEP]"] + tokens_2 + ["[SEP]"]
+                # tokens = tokens[: max_length - 2]
+                # tokens = self._tokenizer.add_special_tokens_single_sentence(tokens)
             else:
                 # self.entries.remove(entry)
                 # continue
                 tokens = []
 
-            segment_ids = [0] * len(tokens)
+            # segment_ids = [0] * len(tokens)
+            segment_ids = torch.cat([torch.zeros(2 + len(tokens_1)), torch.ones(len(tokens_2) + 1)])
             input_mask = [1] * len(tokens)
             if len(tokens) < max_length:
                 # Note here we pad in front of the sentence
