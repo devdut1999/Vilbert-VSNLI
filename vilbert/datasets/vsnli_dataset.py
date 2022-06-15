@@ -197,7 +197,7 @@ class VisualNLIDataset(Dataset):
             logger.info("Loading from %s" % cache_path)
             self.entries = cPickle.load(open(cache_path, "rb"))
 
-    def truncate_seq_pair(tokens_a, tokens_b, max_length):
+    def truncate_seq_pair(self, tokens_a, tokens_b, max_length):
         while True:
             total_length = len(tokens_a) + len(tokens_b)
             if total_length <= max_length:
@@ -229,7 +229,7 @@ class VisualNLIDataset(Dataset):
             if(type(entry["hypothesis"]) != float):
                 tokens_1 = self._tokenizer.encode(entry["hypothesis"])
                 tokens_2 = self._tokenizer.encode(entry["premise"])
-                self.truncate_seq_pair(tokens_1, tokens_2, self.args.max_length - 3)
+                self.truncate_seq_pair(tokens_1, tokens_2,max_length - 3)
                 tokens = ["[CLS]"] + tokens_1 + ["[SEP]"] + tokens_2 + ["[SEP]"]
                 # tokens = tokens[: max_length - 2]
                 # tokens = self._tokenizer.add_special_tokens_single_sentence(tokens)
@@ -239,7 +239,12 @@ class VisualNLIDataset(Dataset):
                 tokens = []
 
             # segment_ids = [0] * len(tokens)
-            segment_ids = torch.cat([torch.zeros(2 + len(tokens_1)), torch.ones(len(tokens_2) + 1)])
+            x = [0]*(2 + len(tokens_1))
+            y = [1]*(len(tokens_2) + 1)
+            x = x + y
+            # print(x)
+            # segment_ids = torch.cat([torch.zeros(2 + len(tokens_1)), torch.ones(len(tokens_2) + 1)])
+            segment_ids = x
             input_mask = [1] * len(tokens)
             if len(tokens) < max_length:
                 # Note here we pad in front of the sentence
