@@ -8,8 +8,8 @@ cd ..
 
 mkdir data
 cd data 
-!wget https://dl.fbaipublicfiles.com/vilbert-multi-task/detectron_model.pth
-!wget https://dl.fbaipublicfiles.com/vilbert-multi-task/detectron_config.yaml
+wget https://dl.fbaipublicfiles.com/vilbert-multi-task/detectron_model.pth
+wget https://dl.fbaipublicfiles.com/vilbert-multi-task/detectron_config.yaml
 cd ..
 
 cd Scripts
