@@ -7,7 +7,7 @@
 ```text
 conda create -n vilbert-mt python=3.6
 conda activate vilbert-mt
-git clone --recursive https://github.com/facebookresearch/vilbert-multi-task.git
+git clone --recursive 
 cd vilbert-multi-task
 pip install -r requirements.txt
 ```
