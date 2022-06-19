@@ -8,7 +8,6 @@ python3 setup.py build_ext --inplace
 cd ..
 cd ..
 
-rmdir vqa_maskrcnn_benchmark
 git clone https://gitlab.com/vedanuj/vqa-maskrcnn-benchmark
 cd vqa-maskrcnn-benchmark
 python setup.py build develop
