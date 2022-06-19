@@ -3,6 +3,8 @@ cd ..
 cd datasets
 cd vsnli
 mkdir extracted_featutes
+wget https://storage.googleapis.com/allennlp-public-data/snli-ve/flickr30k_images.tar.gz
+tar zxf flickr30k_images.tar.gz
 cd ..
 cd ..
 
