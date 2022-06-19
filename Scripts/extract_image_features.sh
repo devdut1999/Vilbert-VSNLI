@@ -8,7 +8,6 @@ tar zxf flickr30k_images.tar.gz
 cd ..
 cd ..
 
-mv vqa-maskrcnn-benchmark vqa_maskrcnn_benchmark
 python3 script/extract_features.py --model_file data/detectron_model.pth --config_file data/detectron_config.yaml --image_dir "datasets/vsnli/flickr30k_images" --output_folder "datasets/vsnli/extracted_features"
 
 cd Scripts
