@@ -9,7 +9,8 @@ cd ..
 cd ..
 
 git clone https://gitlab.com/vedanuj/vqa-maskrcnn-benchmark
-cd vqa-maskrcnn-benchmark
+mv vqa-maskrcnn-benchmark vqa_maskrcnn_benchmark
+cd vqa_maskrcnn_benchmark
 python setup.py build develop
 cd ..
 
