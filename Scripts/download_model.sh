@@ -2,8 +2,8 @@ cd ..
 
 mkdir models
 cd models
-https://dl.fbaipublicfiles.com/vilbert-multi-task/pretrained_model.bin
-https://dl.fbaipublicfiles.com/vilbert-multi-task/multi_task_model.bin
+wget https://dl.fbaipublicfiles.com/vilbert-multi-task/pretrained_model.bin
+wget https://dl.fbaipublicfiles.com/vilbert-multi-task/multi_task_model.bin
 cd ..
 
 mkdir data
