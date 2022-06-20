@@ -344,7 +344,7 @@ TASK19:
   val_annotations_jsonpath: 'datasets/vsnli/VSNLI_1.0_dev.tsv'
   max_seq_length: 100
   max_region_num: 101
-  batch_size: 8
+  batch_size: 64
   eval_batch_size: 1024
   train_split: train
   val_split: dev
