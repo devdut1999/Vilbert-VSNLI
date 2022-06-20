@@ -17,3 +17,12 @@ pip install -r requirements.txt
 conda install pytorch torchvision cudatoolkit=10.0 -c pytorch
 ```
 3. Update GCC version to 4.9 and above
+
+4. Running the bash script files 
+```
+bash download_model.sh
+bash download_vsnli_data.sh
+bash env_set_up.sh
+bash extract_image_features.sh
+bash train_vilbert.sh
+```
