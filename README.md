@@ -27,3 +27,7 @@ bash env_set_up.sh
 bash extract_image_features.sh
 bash train_vilbert.sh
 ```
+5. Adding directory path to python
+```
+export PYTHONPATH="${PYTHONPATH}:/nas/home/devadutt/Vilbert-VSNLI"
+```
