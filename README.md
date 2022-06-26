@@ -18,8 +18,17 @@ conda install pytorch torchvision cudatoolkit=10.0 -c pytorch
 conda install opencv
 ```
 3. Update GCC version to 4.9 and above
+```
+conda install -c conda-forge gcc
+conda install -c conda-forge gxx
+```
 
-4. Running the bash script files 
+4. Adding directory path to python
+```
+export PYTHONPATH="${PYTHONPATH}:/nas/home/devadutt/Vilbert-VSNLI"
+```
+
+5. Running the bash script files 
 ```
 bash download_model.sh
 bash download_vsnli_data.sh
@@ -27,7 +36,4 @@ bash env_set_up.sh
 bash extract_image_features.sh
 bash train_vilbert.sh
 ```
-5. Adding directory path to python
-```
-export PYTHONPATH="${PYTHONPATH}:/nas/home/devadutt/Vilbert-VSNLI"
-```
+
