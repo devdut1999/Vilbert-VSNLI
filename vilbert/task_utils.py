@@ -184,6 +184,7 @@ def ForwardModelsTrain(
     task_count[task_id] += 1
     # get the batch
     batch = task_iter_train[task_id].next()
+    print(batch.shape)
     batch = tuple(t.cuda(device=device, non_blocking=True) for t in batch)
 
     if task_id == "TASK4" or task_id == "TASK17":
@@ -322,59 +323,58 @@ def ForwardModelsTrain(
     )
 
     # for different task, we use different output to calculate the loss.
-    if task_cfg[task_id]["type"] == "VL-classifier":
-        loss = task_losses[task_id](vil_prediction, target)
-        loss = loss.mean() * target.size(1)
-        batch_score = compute_score_with_logits(vil_prediction, target).sum() / float(
-            batch_size
-        )
+    # if task_cfg[task_id]["type"] == "VL-classifier":
+    #     loss = task_losses[task_id](vil_prediction, target)
+    #     loss = loss.mean() * target.size(1)
+    #     batch_score = compute_score_with_logits(vil_prediction, target).sum() / float(
+    #         batch_size
+    #     )
 
-    elif task_cfg[task_id]["type"] == "VL-classifier-GQA":
-        loss = task_losses[task_id](vil_prediction_gqa, target)
-        loss = loss.mean() * target.size(1)
-        batch_score = compute_score_with_logits(
-            vil_prediction_gqa, target
-        ).sum() / float(batch_size)
+    # elif task_cfg[task_id]["type"] == "VL-classifier-GQA":
+    #     loss = task_losses[task_id](vil_prediction_gqa, target)
+    #     loss = loss.mean() * target.size(1)
+    #     batch_score = compute_score_with_logits(
+    #         vil_prediction_gqa, target
+    #     ).sum() / float(batch_size)
 
-    elif task_cfg[task_id]["type"] == "VL-logit":
-        vil_logit = vil_logit.view(batch_size, num_options)
-        loss = task_losses[task_id](vil_logit, target)
-        _, preds = torch.max(vil_logit, 1)
-        batch_score = float((preds == target).sum()) / float(batch_size)
+    # elif task_cfg[task_id]["type"] == "VL-logit":
+    #     vil_logit = vil_logit.view(batch_size, num_options)
+    #     loss = task_losses[task_id](vil_logit, target)
+    #     _, preds = torch.max(vil_logit, 1)
+    #     batch_score = float((preds == target).sum()) / float(batch_size)
 
-    elif task_cfg[task_id]["type"] == "V-logit":
-        loss = task_losses[task_id](vision_logit, target)
-        loss = loss.mean() * target.size(1)
-        _, select_idx = torch.max(vision_logit, dim=1)
-        select_target = target.squeeze(2).gather(1, select_idx.view(-1, 1))
-        batch_score = float(torch.sum(select_target > 0.5)) / batch_size
+    # elif task_cfg[task_id]["type"] == "V-logit":
+    #     loss = task_losses[task_id](vision_logit, target)
+    #     loss = loss.mean() * target.size(1)
+    #     _, select_idx = torch.max(vision_logit, dim=1)
+    #     select_target = target.squeeze(2).gather(1, select_idx.view(-1, 1))
+    #     batch_score = float(torch.sum(select_target > 0.5)) / batch_size
 
-    elif task_cfg[task_id]["type"] == "V-logit-mc":
-        vision_logit = vision_logit[:, 101:]
-        vision_logit = vision_logit.squeeze(2).gather(1, multiple_choice_ids)
-        vision_logit = vision_logit.unsqueeze(2)
-        loss = task_losses[task_id](vision_logit, target)
-        loss = loss.mean() * target.size(1)
-        _, preds = torch.max(vision_logit, dim=1)
-        _, target = torch.max(target, dim=1)
-        batch_score = float((preds == target).sum()) / float(batch_size)
+    # elif task_cfg[task_id]["type"] == "V-logit-mc":
+    #     vision_logit = vision_logit[:, 101:]
+    #     vision_logit = vision_logit.squeeze(2).gather(1, multiple_choice_ids)
+    #     vision_logit = vision_logit.unsqueeze(2)
+    #     loss = task_losses[task_id](vision_logit, target)
+    #     loss = loss.mean() * target.size(1)
+    #     _, preds = torch.max(vision_logit, dim=1)
+    #     _, target = torch.max(target, dim=1)
+    #     batch_score = float((preds == target).sum()) / float(batch_size)
 
-    elif task_cfg[task_id]["type"] == "VL-binary-classifier":
-        loss = task_losses[task_id](vil_binary_prediction, target)
-        loss = loss.mean()
-        batch_score = compute_score_with_logits(
-            vil_binary_prediction, target
-        ).sum() / float(batch_size)
+    # elif task_cfg[task_id]["type"] == "VL-binary-classifier":
+    #     loss = task_losses[task_id](vil_binary_prediction, target)
+    #     loss = loss.mean()
+    #     batch_score = compute_score_with_logits(
+    #         vil_binary_prediction, target
+    #     ).sum() / float(batch_size)
 
-    elif task_cfg[task_id]["type"] == "VL-tri-classifier":
-        loss = task_losses[task_id](vil_tri_prediction, target)
-        loss = loss.mean()
-        batch_score = compute_score_with_logits(
-            vil_tri_prediction, target
-        ).sum() / float(batch_size)
+    # elif task_cfg[task_id]["type"] == "VL-tri-classifier":
+    #     loss = task_losses[task_id](vil_tri_prediction, target)
+    #     loss = loss.mean()
+    #     batch_score = compute_score_with_logits(
+    #         vil_tri_prediction, target
+    #     ).sum() / float(batch_size)
 
-    return loss, batch_score
-
+    return 0, 0
 
 def LoadLosses(args, task_cfg, task_ids):
 
