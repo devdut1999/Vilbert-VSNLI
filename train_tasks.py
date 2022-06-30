@@ -148,7 +148,7 @@ def main():
     parser.add_argument(
         "--num_workers",
         type=int,
-        default=16,
+        default=0,
         help="Number of workers in the dataloader.",
     )
     parser.add_argument(
@@ -199,7 +199,8 @@ def main():
     )
     parser.add_argument(
         "--clean_train_sets",
-        default=True,
+        # default=True,
+        default=False,
         type=bool,
         help="whether clean train sets for multitask data.",
     )
@@ -270,13 +271,14 @@ def main():
         device = torch.device(
             "cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu"
         )
-        n_gpu = torch.cuda.device_count()
+        # n_gpu = torch.cuda.device_count()
     else:
         torch.cuda.set_device(args.local_rank)
         device = torch.device("cuda", args.local_rank)
-        n_gpu = 1
+        # n_gpu = 1
         torch.distributed.init_process_group(backend="nccl")
-
+     
+    n_gpu = 1
     logger.info(
         "device: {} n_gpu: {}, distributed training: {}, 16-bits training: {}".format(
             device, n_gpu, bool(args.local_rank != -1), args.fp16
@@ -634,7 +636,7 @@ def main():
                 output_checkpoint,
             )
     tbLogger.txt_close()
-
+    torch.cuda.empty_cache()
 
 def evaluate(
     args,
