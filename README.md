@@ -8,33 +8,23 @@
 conda create -n vilbert-mt python=3.6
 conda activate vilbert-mt
 git clone --recursive https://github.com/devdut1999/Vilbert-VSNLI.git
-cd vilbert-multi-task
-conda install opencv
-pip install -r requirements.txt
 ```
 
-2. Install pytorch
+2. Setup Conda Environment
 ```
-pip install torch==1.8.0+cu101 torchvision==0.9.0+cu101 torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
-pip install yacs
-```
-3. Update GCC version to 4.9 and above
-```
-conda install -c conda-forge gcc
-conda install -c conda-forge gxx
 ```
 
-4. Adding directory path to python
+3. Adding directory path to python
 ```
 export PYTHONPATH="${PYTHONPATH}:/nas/home/devadutt/Vilbert-VSNLI"
 ```
 
-5. Running the bash script files 
+4. Running the bash script files 
 ```
-bash download_model.sh
-bash download_vsnli_data.sh
-bash env_set_up.sh
-bash extract_image_features.sh
-bash train_vilbert.sh
+bash download_model.sh          - download pretrained models
+bash download_vsnli_data.sh     - download vsnli data
+bash env_set_up.sh              - setup environment
+bash extract_image_features.sh  - Extract features from images
+bash train_vilbert.sh           - Training the vilbert model
 ```
 
