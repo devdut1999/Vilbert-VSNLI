@@ -238,18 +238,22 @@ class VisualNLIDataset(Dataset):
                 # tokens = self._tokenizer.encode(entry["hypothesis"])
                 # tokens = tokens[: max_length - 2]
                 # tokens = self._tokenizer.add_special_tokens_single_sentence(tokens)
+                x = [0]*(2 + len(tokens_1))
+                y = [1]*(len(tokens_2) + 1)
+                x = x + y
+                # print(x)
+                segment_ids = x
             else:
                 # self.entries.remove(entry)
                 # continue
+                tokens_1 = []
+                tokens_2 = []
                 tokens = []
+                segment_ids = []
 
             # segment_ids = [0] * len(tokens)
 
-            x = [0]*(2 + len(tokens_1))
-            y = [1]*(len(tokens_2) + 1)
-            x = x + y
-            # print(x)
-            segment_ids = x
+            
 
             # print(tokens)
             # print(type(tokens))
