@@ -20,14 +20,7 @@ cd Vilbert-VSNLI
 export PYTHONPATH="${PYTHONPATH}:/nas/home/devadutt/Vilbert-VSNLI"
 ```
 
-4. Install apex for distributed training 
-```
-git clone https://github.com/NVIDIA/apex
-cd apex
-pip install -v --no-cache-dir ./
-```
-
-5. Running the bash script files 
+4. Running the bash script files 
 ```
 cd Scripts
 bash download_model.sh          - download pretrained models
