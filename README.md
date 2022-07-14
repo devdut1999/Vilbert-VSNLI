@@ -7,8 +7,8 @@
 ```text
 git clone --recursive https://github.com/devdut1999/Vilbert-VSNLI.git
 cd Vilbert-VSNLI
-conda env create --name vilbert-mt --file=environment.yml
-conda activate vilbert-mt
+conda env create --file=environment.yml
+conda activate dev
 ```
 
 
