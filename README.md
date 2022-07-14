@@ -5,22 +5,19 @@
 1. Create a fresh conda environment, and install all dependencies.
 
 ```text
-conda create -n vilbert-mt python=3.6
-conda activate vilbert-mt
 git clone --recursive https://github.com/devdut1999/Vilbert-VSNLI.git
 cd Vilbert-VSNLI
+conda env create --name vilbert-mt --file=environment.yml
+conda activate vilbert-mt
 ```
 
-2. Setup Conda Environment
-```
-```
 
-3. Adding directory path to python
+2. Adding directory path to python
 ```
 export PYTHONPATH="${PYTHONPATH}:/nas/home/devadutt/Vilbert-VSNLI"
 ```
 
-4. Running the bash script files 
+3. Running the bash script files 
 ```
 cd Scripts
 bash download_model.sh          - download pretrained models
