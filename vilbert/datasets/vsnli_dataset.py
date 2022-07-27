@@ -84,7 +84,7 @@ def _load_dataset(dataroot, name, clean_datasets):
 
 
 def npy_feature_extraction(image_id):
-    infile = "/content/drive/MyDrive/vilbert-multi-task/datasets/vsnli/extracted_features/"+image_id[:-4]+".npy"
+    infile = "/nas/home/devadutt/Vilbert-VSNLI/datasets/vsnli/extracted_features/"+image_id[:-4]+".npy"
     reader = np.load(infile, allow_pickle=True)
     item = {}
     item["image_id"] = reader.item().get("image_id")
@@ -233,24 +233,24 @@ class VisualNLIDataset(Dataset):
                 tokens_2 = self._tokenizer.encode(entry["hypothesis"])
 
                 self.truncate_seq_pair(tokens_1, tokens_2,max_length - 3)
-                tokens = self._tokenizer.add_special_tokens_sentences_pair(tokens_1,tokens_2) 
+                tokens = self._tokenizer.add_special_tokens_sentences_pair(tokens_1,tokens_2)
+                x = [0]*(2 + len(tokens_1))
+                y = [1]*(len(tokens_2) + 1)
+                x = x + y
+                # print(x)
+                segment_ids = x
                 # tokens = ["[CLS]"] + tokens_1 + ["[SEP]"] + tokens_2 + ["[SEP]"]
                 
 
                 # tokens = self._tokenizer.encode(entry["hypothesis"])
                 # tokens = tokens[: max_length - 2]
                 # tokens = self._tokenizer.add_special_tokens_single_sentence(tokens)
-                x = [0]*(2 + len(tokens_1))
-                y = [1]*(len(tokens_2) + 1)
-                x = x + y
-                # print(x)
-                segment_ids = x
             else:
                 # self.entries.remove(entry)
                 # continue
+                tokens = []
                 tokens_1 = []
                 tokens_2 = []
-                tokens = []
                 segment_ids = []
 
             # segment_ids = [0] * len(tokens)
@@ -353,3 +353,4 @@ class VisualNLIDataset(Dataset):
 
     def __len__(self):
         return len(self.entries)
+
