@@ -87,6 +87,7 @@ class FeatureExtractor:
 
     def _image_transform(self, path):
         img = Image.open(path)
+        img = img.convert('RGB')
         im = np.array(img).astype(np.float32)
         # IndexError: too many indices for array, grayscale images
         # print(im.shape)
