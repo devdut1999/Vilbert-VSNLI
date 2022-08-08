@@ -1,10 +1,4 @@
-.gitignore
-.gitmodules
-CODE_OF_CONDUCT.md
-CONTRIBUTING.md
-LICENSE
 README.md
-demo.ipynb
 eval_retrieval.py
 eval_tasks.py
 requirements.txt
@@ -25,7 +19,6 @@ config/bert_large_6layer_6conect.json
 config/bert_large_baseline.json
 config/roberta-base_weight_name.json
 config/roberta_base_6layer_6connect.json
-data/README.md
 demo/1.jpg
 evaluation/eval_coco_retrieval.py
 evaluation/eval_concap_retrieval.py

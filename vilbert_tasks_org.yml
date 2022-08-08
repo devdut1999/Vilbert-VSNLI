@@ -335,20 +335,18 @@ TASK19:
   name: VisualNLI
   type: VL-tri-classifier
   loss: BCEWithLogitLoss
-  # type: VL-binary-classifier
-  # loss: CrossEntropyLoss
   process: normal
   task_id: 19
-  dataroot: datasets/paco/
+  dataroot: datasets/vsnli/
   features_h5path1: ''
   features_h5path2: ''
-  train_annotations_jsonpath: 'datasets/paco/train.csv'
-  val_annotations_jsonpath: 'datasets/paco/test.csv'
-  max_seq_length: 200
+  train_annotations_jsonpath: 'datasets/vsnli/VSNLI_1.0_train.tsv'
+  val_annotations_jsonpath: 'datasets/vsnli/VSNLI_1.0_dev.tsv'
+  max_seq_length: 100
   max_region_num: 101
-  batch_size: 16
+  batch_size: 32
   eval_batch_size: 1024
   train_split: train
   val_split: dev
   lr: 0.00002
-  num_epoch: 30
+  num_epoch: 10

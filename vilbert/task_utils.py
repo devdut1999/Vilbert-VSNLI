@@ -1,5 +1,3 @@
-# Copyright (c) Facebook, Inc. and its affiliates.
-
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
@@ -186,6 +184,7 @@ def ForwardModelsTrain(
     batch = task_iter_train[task_id].next()
     batch = tuple(t.cuda(device=device, non_blocking=True) for t in batch)
 
+
     if task_id == "TASK4" or task_id == "TASK17":
         features, spatials, image_mask, question, target, input_mask, segment_ids, multiple_choice_ids, co_attention_mask, question_id = (
             batch
@@ -194,8 +193,10 @@ def ForwardModelsTrain(
         features, spatials, image_mask, question, target, input_mask, segment_ids, co_attention_mask, question_id = (
             batch
         )
-
+    # print("Question shape",question.shape)
+    # print("Input Mask shape",input_mask.shape)
     batch_size = features.size(0)
+    # print("Batch_size",batch_size)
     if task_cfg[task_id]["process"] in ["dialog"]:
         max_num_bbox = features.size(1)
         nround = question.size(1)
@@ -320,7 +321,10 @@ def ForwardModelsTrain(
         co_attention_mask,
         task_tokens,
     )
-
+	
+    # print("Bi Prediction shape",vil_binary_prediction.shape)
+    # print("Tri Prediction shape",vil_tri_prediction.shape)
+    
     # for different task, we use different output to calculate the loss.
     if task_cfg[task_id]["type"] == "VL-classifier":
         loss = task_losses[task_id](vil_prediction, target)
@@ -857,3 +861,4 @@ def EvaluatingModel(
         batch_score = compute_score_with_logits(vil_tri_prediction, target).sum()
 
     return float(loss), float(batch_score), batch_size, results, others
+

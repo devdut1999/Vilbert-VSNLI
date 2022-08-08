@@ -85,7 +85,7 @@ def main():
     )
     parser.add_argument(
         "--num_train_epochs",
-        default=30,
+        default=10,
         type=int,
         help="Total number of training epochs to perform.",
     )
@@ -220,7 +220,7 @@ def main():
     )
 
     args = parser.parse_args()
-    with open("vilbert_tasks.yml", "r") as f:
+    with open("vilbert_tasks_org.yml", "r") as f:
         task_cfg = edict(yaml.safe_load(f))
 
     random.seed(args.seed)

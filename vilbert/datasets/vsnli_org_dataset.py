@@ -45,9 +45,9 @@ def _load_dataset(dataroot, name, clean_datasets):
     name: 'train', 'dev', 'test'
     """
     if name == "train":
-        x = pd.read_csv("datasets/paco/train.csv")
+        x = pd.read_csv("datasets/vsnli/VSNLI_1.0_train.tsv", sep='\t')
     elif name == "dev" or name == "test":
-        x = pd.read_csv("datasets/paco/test.csv")
+        x = pd.read_csv("datasets/vsnli/VSNLI_1.0_test.tsv", sep='\t')
         # remove_ids = []
         # if clean_datasets:
         #     remove_ids = np.load(
@@ -60,27 +60,21 @@ def _load_dataset(dataroot, name, clean_datasets):
     cnt = 0
     while cnt < y:
         dictionary = {}
-        dictionary["image_id"] = x.iloc[cnt]["filename"]
+        dictionary["image_id"] = x.iloc[cnt]["image"]
         # if name == "train" and dictionary["image_id"] in remove_ids:
         #     continue
         dictionary["question_id"] = cnt
-        dictionary["hypothesis"] = x.iloc[cnt]["precondition"]
-        dictionary["premise"] = x.iloc[cnt]["query"]
-        
-        dictionary["labels"] = [x.iloc[cnt]["label"]]
-        # dictionary["image_id"] = x.iloc[cnt]["image"]
-        # if name == "train" and dictionary["image_id"] in remove_ids:
-        #     continue
-        # dictionary["question_id"] = cnt
-        # dictionary["hypothesis"] = x.iloc[cnt]["sentence2"]
-        # dictionary["premise"] = x.iloc[cnt]["sentence1"]
-        # dictionary["labels"] = [
-        #   int(LABEL_MAP[x.iloc[cnt]["gold_label"]])
-        # ]
+        dictionary["hypothesis"] = x.iloc[cnt]["sentence2"]
+        dictionary["premise"] = x.iloc[cnt]["sentence1"]
+        dictionary["labels"] = [
+            int(LABEL_MAP[x.iloc[cnt]["gold_label"]])
+        ]
         
         dictionary["scores"] = [1.0]
         items.append(dictionary)
         cnt += 1
+        # print(dictionary)
+    
 
     entries = []
     for item in items:
@@ -89,7 +83,7 @@ def _load_dataset(dataroot, name, clean_datasets):
 
 
 def npy_feature_extraction(image_id):
-    infile = "/nas/home/devadutt/Vilbert-VSNLI/datasets/paco/extracted_features/"+image_id[:-4]+".npy"
+    infile = "/nas/home/devadutt/Vilbert-VSNLI/datasets/vsnli/extracted_features/"+image_id[:-4]+".npy"
     reader = np.load(infile, allow_pickle=True)
     item = {}
     item["image_id"] = reader.item().get("image_id")
@@ -191,7 +185,7 @@ class VisualNLIDataset(Dataset):
             cache_path = os.path.join(
                 dataroot,
                 "cache",
-                "Paco" + "_" + split + "_" + str(max_seq_length) + clean_train + ".pkl",
+                task + "_" + split + "_" + str(max_seq_length) + clean_train + ".pkl",
             )
 
         if not os.path.exists(cache_path):
@@ -358,4 +352,3 @@ class VisualNLIDataset(Dataset):
 
     def __len__(self):
         return len(self.entries)
-

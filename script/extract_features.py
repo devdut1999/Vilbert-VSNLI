@@ -13,6 +13,8 @@ import cv2
 import numpy as np
 import torch
 from PIL import Image
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 from vqa_maskrcnn_benchmark.maskrcnn_benchmark.config import cfg
 from vqa_maskrcnn_benchmark.maskrcnn_benchmark.layers import nms
@@ -87,6 +89,9 @@ class FeatureExtractor:
 
     def _image_transform(self, path):
         img = Image.open(path)
+        # if np.array(img).shape[2] == 4:
+        img = img.convert('RGB')
+        # print(np.array(img).shape)
         im = np.array(img).astype(np.float32)
         # IndexError: too many indices for array, grayscale images
         # print(im.shape)
@@ -225,8 +230,9 @@ class FeatureExtractor:
         else:
             files = glob.glob(os.path.join(image_dir, "*"))
             files = sorted(files)
+            del files[-1]
             print(files)
-            # print(len(files))
+            print(len(files))
             # filess = []
             # for i in range(0,31776):
             #   filess.append(files[i])
