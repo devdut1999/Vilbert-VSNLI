@@ -44,10 +44,13 @@ def _load_dataset(dataroot, name, clean_datasets):
     dataroot: root path of dataset
     name: 'train', 'dev', 'test'
     """
-    if name == "train":
-        x = pd.read_csv("datasets/paco/train.csv")
-    elif name == "dev" or name == "test":
-        x = pd.read_csv("datasets/paco/test.csv")
+
+    datapath = dataroot+name+".csv"
+    # if name == "train":
+    #     x = pd.read_csv("datasets/paco/train.csv")
+    # elif name == "dev" or name == "test":
+    #     x = pd.read_csv("datasets/paco/test.csv")
+    x = pd.read_csv(datapath)
         # remove_ids = []
         # if clean_datasets:
         #     remove_ids = np.load(
