@@ -346,9 +346,9 @@ TASK19:
   val_annotations_jsonpath: 'datasets/paco/test.csv'
   max_seq_length: 200
   max_region_num: 101
-  batch_size: 16
+  batch_size: 8
   eval_batch_size: 1024
   train_split: train
-  val_split: dev
+  val_split: test
   lr: 0.00002
-  num_epoch: 30
+  num_epoch: 5
