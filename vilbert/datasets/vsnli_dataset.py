@@ -22,6 +22,7 @@ os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
 
 LABEL_MAP = {"contradiction": 0, "neutral": 1, "entailment": 2}
 
+extracted_features_path = "/nas/home/devadutt/Vilbert-VSNLI/datasets/paco/extracted_features/"
 
 def assert_eq(real, expected):
     assert real == expected, "%s (true) vs %s (expected)" % (real, expected)
@@ -92,7 +93,7 @@ def _load_dataset(dataroot, name, clean_datasets):
 
 
 def npy_feature_extraction(image_id):
-    infile = "/nas/home/devadutt/Vilbert-VSNLI/datasets/paco/extracted_features/"+image_id[:-4]+".npy"
+    infile = extracted_features_path+image_id[:-4]+".npy"
     reader = np.load(infile, allow_pickle=True)
     item = {}
     item["image_id"] = reader.item().get("image_id")
